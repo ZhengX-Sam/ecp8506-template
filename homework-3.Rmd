@@ -1,0 +1,30 @@
+---
+title: "Homework 3"
+output: pdf_document
+author: first last
+date: "`r format(Sys.time(), '%d %B %Y')`"
+---
+
+# Problem 1
+
+```{r}
+
+```
+
+# Problem 2
+
+```{r}
+
+```
+
+# Problem 3
+
+```{r}
+
+```
+
+# Problem 4
+
+```{r}
+
+```

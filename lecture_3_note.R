@@ -1,13 +1,15 @@
----
-title: "Homework 3"
-output: pdf_document
-author: first last
-date: "`r format(Sys.time(), '%d %B %Y')`"
----
 
-# Problem 1
 
-```{r}
+
+###############
+# Q1. Building a data.frame
+###############
+
+# ● Create a data.frame matching the table shown
+#       ○ hint: type ?rep() into the console to see help for the replicate function
+# ● Save the output to an object named “dat”
+# ● Verify that the structure and contents of dat are correct
+# ● Save “dat” to disk in your working directory with the name “output.csv”
 
 library(tidyverse)
 
@@ -32,11 +34,26 @@ dat
 # output dataframe "dat" into a csv file "output.csv"
 write.csv(dat,file="output.csv", row.names = FALSE)
 
-```
 
-# Problem 2
 
-```{r}
+###############
+# Q2. Modifying an existing data set
+###############
+
+# ● Import mad-nonmem.csv
+# ● Filter out commented rows (i.e. in column C, rows equal to “C”)
+# ● Create new columns in the data set
+#       ○ TIMED = time in days, rounded to the nearest hundredth
+#       ○ SEX_c = recode SEX column from 0/1 to M/F
+#       ○ DOSE_f = factor of doses in ascending order
+# ● Drop all columns between TAD and ADDL (inclusive), 
+#   and DTTM Move TIMED next to the TIME column
+
+###   Challenge: Create a new data frame using a pivot_* function 
+###   to create a three- column data set, where the first column is the ID, 
+###   the second column is the name of a covariate, and the third column is 
+###   the value of a covariate
+
 # Load readr package and import nonmem data file
 library(tidyverse)
 library(readr)
@@ -64,11 +81,21 @@ Challenge %>% select(-(C:NUM),-(TIME:SEX),-(BLQ:DTTM)) %>%
                values_to = "value")
 
 
-```
 
-# Problem 3
+###############
+# Q3. Plotting our data
+###############
 
-```{r}
+# ● Plot 1: boxplot showing the distribution of age for each sex in your data set
+#       ○ hint: consider the number of rows per subject
+# ● Plot 2: spaghetti plot 
+#   (e.g. a line for each subject and a dot for each observation) 
+#   of all subjects with each dose group uniquely colored, 
+#   faceted by study day (DAY column), with the y-axis presented on a log scale 
+#       ○ hint: use Factors to get doses to show up in order
+
+###   Challenge: use summarize() and create a boxplot of individual Cmax values 
+###   for each dose level
 
 library(tidyverse)
 library(readr)
@@ -128,11 +155,22 @@ q3nmdata %>%
   # modify x- and y-axis label
   labs(x="Dose", y="log10(maximum concentration)")
 
-```
 
-# Problem 4
 
-```{r}
+###############
+# Q4. Writing a custom summary function
+###############
+
+# ● Import mad_nonmem.csv
+# ● Write a function that summarizes continuous covariates and outputs them 
+#   in the following format: “mean [5th percentile, 95th percentile]”
+# ● Apply the function separately for each dose group across the following covariates
+#       ○ WT, AGE, EGFR, BILI
+# ● Pivot the data set so you have three columns: Dose, Covariate Name, 
+#   and Covariate Summary Value
+
+###   Challenge: Use map() to create a list of individual concentration-time plots
+
 library(tidyverse)
 library(readr)
 q4nmdata <- read.csv("mad-nonmem.csv", header = TRUE)
@@ -166,4 +204,3 @@ q4nmdata %>%
   pivot_longer(WT:BILI)
 
 
-```
